@@ -1,3 +1,26 @@
+let firstNumber = '';
+let operator = '';
+let newNumber = '';
+
+const add = (a, b) => {
+    return a+b;
+}
+
+const substract = (a, b) => {
+    return a-b;
+}
+
+const multiply = (a, b) => {
+    return a*b;
+}
+
+const divide = (a, b) => {
+    if(b === 0) {
+        return 'Cannot divide by zero';
+    }
+    return a/b;
+}
+
 // This function clears all the values
 function clearScreen() {
     document.getElementById("result").value = "";
