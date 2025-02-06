@@ -87,6 +87,17 @@ function display(value) {
        newNumber = true;
        return;
    }
+   if(value === '.') {
+    if(display.value.includes('.')) {
+        return;
+    }
+    if(newNumber || display.value === '.') {
+        display.value = '0.';
+        newNumber = false;
+        return;
+    }
+   }
+   
    if (newNumber) {
        display.value = value;
        newNumber = false;
