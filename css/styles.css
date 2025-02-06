@@ -37,7 +37,7 @@ button:active {
 
 .calculator {
     display: grid;
-    grid-template-rows: repeat(5, 100px);
+    grid-template-rows: repeat(6, 100px);
     grid-template-columns: repeat(4, 100px);
     gap: 2px 2px;
     background-color: pink;
@@ -46,15 +46,15 @@ button:active {
     border: 5px solid #ff4070;
 }
 
-.display-box {
+.display {
     background-color: #dcdbe1;
     color: black;
     border-radius: 5px;
-    grid-column: 1 / 4;
+    grid-column: 1 / 5;
     font-size: 3.5rem;
     text-align: right;
 }
 
-.btn {
+.highlight {
     background-color: #fb0066;
 }

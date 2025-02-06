@@ -10,24 +10,28 @@
 <body>
   <div class="container">
     <div class="calculator">
-      <input class="display-box" type="text" id="result" disabled />
-      <button class="btn" type="button" value="C" onclick="clearScreen()">C</button>
-      <button type="button" value="7" onclick="display('7')">7</button>
-      <button type="button" value="8" onclick="display('8')">8</button>
-      <button type="button" value="9" onclick="display('9')">9</button>
-      <button type="button" value="+" onclick="display('+')">+</button>
-      <button type="button" value="4" onclick="display('4')">4</button>
-      <button type="button" value="5" onclick="display('5')">5</button>
-      <button type="button" value="6" onclick="display('6')">6</button>
-      <button type="button" value="-" onclick="display('-')">-</button>
-      <button type="button" value="1" onclick="display('1')">1</button>
-      <button type="button" value="2" onclick="display('2')">2</button>
-      <button type="button" value="3" onclick="display('3')">3</button>
-      <button type="button" value="/" onclick="display('/')">/</button>
-      <button type="button" value="." onclick="display('.')">.</button>
-      <button type="button" value="0" onclick="display('0')">0</button>
-      <button class="btn" type="button" value="=" onclick="calculate()">=</button>
-      <button type="button" value="*" onclick="display('*')">*</button>
+      <input class="display" type="text" disabled />
+      
+      <button type="button" value="%" class="operator">%</button>
+      <button type="button" value="Negate" class="operator">+/-</button>
+      <button type="button" value="C" class="highlight action">C</button>
+      <button type="button" value="Backspace" class="action">&lt;=</button>
+      <button type="button" value="7">7</button>
+      <button type="button" value="8">8</button>
+      <button type="button" value="9">9</button>
+      <button type="button" value="+" class="operator">+</button>
+      <button type="button" value="4">4</button>
+      <button type="button" value="5">5</button>
+      <button type="button" value="6">6</button>
+      <button type="button" value="-" class="operator">-</button>
+      <button type="button" value="1">1</button>
+      <button type="button" value="2">2</button>
+      <button type="button" value="3">3</button>
+      <button type="button" value="/" class="operator">/</button>
+      <button type="button" value=".">.</button>
+      <button type="button" value="0">0</button>
+      <button type="button" value="=" class="highlight action">=</button>
+      <button type="button" value="*" class="operator">*</button>
     </div>
   </div>
 </body>
