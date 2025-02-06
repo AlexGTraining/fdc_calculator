@@ -7,8 +7,7 @@ const keys = {
     '5' : '5', '6' : '6', '7' : '7', '8' : '8', '9' : '9',
     '+' : '+', '-' : '-', '*' : '*', '/' : '/',
     'Enter' : '=', '=' : '=',
-    'Escape' : 'C', 'c' : 'C',
-    '.' : '.',
+    'c' : 'C','.' : '.',
     'Backspace' : 'Backspace'
 }
 
@@ -19,13 +18,15 @@ document.addEventListener('keydown' , (e) => {
         e.preventDefault();
         if(key === 'Enter' || key === '=') {
             calculate();
-        } else if (key === 'Escape' || key === 'c') {
+        } else if (key === 'c') {
             clearScreen();
-        } else {
-            display(keys[key]);
-        }
+            
+        } else if(key === 'Backspace'){
+            handleBackSpace();
+        }else {
+        display(keys[key]);
     }
-})
+}})
 
 const add = (a, b) => {
     return a+b;
@@ -44,6 +45,17 @@ const divide = (a, b) => {
         return 'Cannot divide by zero';
     }
     return a/b;
+}
+
+const handleBackSpace = () => {
+    const display = document.getElementById('result');
+    if(display.value.length > 0) {
+        display.value = display.value.slice(0, -1);
+    
+    if(display.value.length === 0) {
+        newNumber = true;
+    }
+  }
 }
 
 const operate = (op, a, b) => {
@@ -75,7 +87,6 @@ function display(value) {
        newNumber = true;
        return;
    }
-   
    if (newNumber) {
        display.value = value;
        newNumber = false;
