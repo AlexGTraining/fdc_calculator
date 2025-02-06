@@ -2,6 +2,31 @@ let firstNumber = '';
 let operator = '';
 let newNumber = true;
 
+const keys = {
+    '0' : '0', '1' : '1', '2' : '2', '3' : '3', '4' : '4',
+    '5' : '5', '6' : '6', '7' : '7', '8' : '8', '9' : '9',
+    '+' : '+', '-' : '-', '*' : '*', '/' : '/',
+    'Enter' : '=', '=' : '=',
+    'Escape' : 'C', 'c' : 'C',
+    '.' : '.',
+    'Backspace' : 'Backspace'
+}
+
+document.addEventListener('keydown' , (e) => {
+    const key = e.key
+
+    if(keys[key]) {
+        e.preventDefault();
+        if(key === 'Enter' || key === '=') {
+            calculate();
+        } else if (key === 'Escape' || key === 'c') {
+            clearScreen();
+        } else {
+            display(keys[key]);
+        }
+    }
+})
+
 const add = (a, b) => {
     return a+b;
 }
