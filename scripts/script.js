@@ -90,7 +90,7 @@ const handleValueButton = function (value) {
     if (existingValue.length === MAX_CHARACTERS)
         return;
 
-    if (value === '0' && array[index] == undefined)
+    if (value === '0' && array[index] == 0)
         return;
 
     if (array[index] === undefined || newNumber) {
