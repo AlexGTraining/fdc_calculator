@@ -62,7 +62,11 @@ const display = function (value) {
         value = decimalCount > 2 ? value.toFixed(2) : value;
     }
 
-    DISPLAY.innerHTML = value;
+    let stringValue = `${value}`;
+    if (stringValue.length > MAX_CHARACTERS)
+        stringValue = stringValue.substring(0, MAX_CHARACTERS);
+
+    DISPLAY.innerHTML = stringValue;
 };
 
 const subscribeToEvents = function () {
