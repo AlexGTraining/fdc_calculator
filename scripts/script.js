@@ -33,9 +33,15 @@ document.addEventListener('keydown', (e) => {
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const modulo = (a, b) => a % b
+const multiply = (a, b) => a * b
 const negate = (a) => a * -1;
+
+const modulo = (a, b) => {
+    if (b === 0) {
+        return 'CANNOT';
+    }
+    return a % b;
+}
 
 const divide = (a, b) => {
     if (b === 0) {
