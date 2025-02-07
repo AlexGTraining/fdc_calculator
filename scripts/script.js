@@ -93,7 +93,7 @@ const handleValueButton = function (value) {
     if (value === '0' && array[index] == 0)
         return;
 
-    if (array[index] === undefined || newNumber) {
+    if (array[index] === undefined || array[index] == 0 || newNumber) {
         if (value === '.' && !existingValue.includes('.'))
             array[index] = `0${value}`;
         else
