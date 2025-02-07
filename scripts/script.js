@@ -51,7 +51,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 const add = (a, b) => a + b;
-const substract = (a, b) => a - b;
+const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const modulo = (a, b) => a % b
 const negate = (a) => a * -1;
@@ -77,7 +77,7 @@ const operate = (op, a, b) => {
     b = Number(b);
     switch (op) {
         case '+': return add(a, b);
-        case '-': return substract(a, b);
+        case '-': return subtract(a, b);
         case '*': return multiply(a, b);
         case '/': return divide(a, b);
         case '%': return modulo(a, b);
