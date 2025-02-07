@@ -64,7 +64,7 @@ const display = function (value) {
 
     let stringValue = `${value}`;
     if (stringValue.length > MAX_CHARACTERS)
-        stringValue = stringValue.substring(0, MAX_CHARACTERS);
+        stringValue = 'TOO LONG';
 
     DISPLAY.innerHTML = stringValue;
 };
