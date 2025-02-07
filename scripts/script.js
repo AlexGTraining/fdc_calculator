@@ -3,13 +3,18 @@ const VALUES = document.querySelectorAll("button:not([class])");
 const OPERATORS = document.querySelectorAll(".operator");
 const ACTIONS = document.querySelectorAll(".action");
 
-const KEYS = {
+const ACTION_KEYS = {
+    'c': 'C', 'Backspace': 'Backspace', 'Enter': '=', '=': '='
+}
+
+const VALUE_KEYS = {
     '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
-    '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+    '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '.': '.'
+}
+
+const OPERATOR_KEYS = {
     '+': '+', '-': '-', '*': '*', '/': '/',
-    'Enter': '=', '=': '=',
-    'c': 'C', '.': '.',
-    'Backspace': 'Backspace'
+    '%': '%', 'n': 'Negate'
 }
 
 const MAX_CHARACTERS = 10;
@@ -17,18 +22,13 @@ const MAX_CHARACTERS = 10;
 document.addEventListener('keydown', (e) => {
     const key = e.key;
 
-    if (KEYS[key]) {
-        e.preventDefault();
-        if (key === 'Enter' || key === '=') {
-            handleEqualsOperator();
-        } else if (key === 'c') {
-            clearScreen();
-        } else if (key === 'Backspace') {
-            handleBackSpace();
-        } else {
-            handleValueButton(KEYS[key]);
-        }
-    }
+    e.preventDefault();
+    if (Object.keys(ACTION_KEYS).includes(key))
+        handleActionButton(ACTION_KEYS[key]);
+    else if (Object.keys(OPERATOR_KEYS).includes(key))
+        handleOperatorButton(OPERATOR_KEYS[key])
+    else if (Object.keys(VALUE_KEYS).includes(key))
+        handleValueButton(VALUE_KEYS[key]);
 });
 
 const add = (a, b) => a + b;
@@ -75,11 +75,11 @@ const subscribeToEvents = function () {
     });
 
     OPERATORS.forEach((element) => {
-        element.addEventListener('click', (e) => handleOperatorButton(e));
+        element.addEventListener('click', (e) => handleOperatorButton(e.target.value));
     });
 
     ACTIONS.forEach((element) => {
-        element.addEventListener('click', (e) => handleActionButton(e));
+        element.addEventListener('click', (e) => handleActionButton(e.target.value));
     });
 }
 
@@ -109,11 +109,11 @@ const handleValueButton = function (value) {
     display(array[index]);
 }
 
-const handleOperatorButton = function (e) {
+const handleOperatorButton = function (value) {
     removeHighlight();
-    highlightButton(e.target);
+    highlightButton(value);
 
-    switch (e.target.value) {
+    switch (value) {
         case 'Negate':
             if (array.length > 0) {
                 let index = array.length - 1 < 2 ? 0 : 2;
@@ -130,15 +130,15 @@ const handleOperatorButton = function (e) {
                 array.splice(-1, 1);
             }
 
-            array[1] = e.target.value;
+            array[1] = value;
 
             display(array[0]);
             break;
     }
 }
 
-const handleActionButton = function (e) {
-    switch (e.target.value) {
+const handleActionButton = function (value) {
+    switch (value) {
         case "C":
             clearScreen();
             break;
@@ -191,9 +191,13 @@ const clearScreen = function () {
     newNumber = true;
 }
 
-const highlightButton = (button) => {
-    button.classList.add('highlight');
-    highlightedOperatorButton = button;
+const highlightButton = (value) => {
+    OPERATORS.forEach((item) => {
+        if (item.value == value) {
+            highlightedOperatorButton = item;
+            item.classList.add('highlight');
+        }
+    });
 }
 
 const removeHighlight = () => {
