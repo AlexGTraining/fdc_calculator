@@ -195,6 +195,3 @@ let newNumber = false;
 let changeNumber = false;
 
 subscribeToEvents();
-
-
-
