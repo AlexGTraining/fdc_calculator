@@ -20,13 +20,13 @@ document.addEventListener('keydown', (e) => {
     if (KEYS[key]) {
         e.preventDefault();
         if (key === 'Enter' || key === '=') {
-            operate(array[1], array[0], DISPLAY.innerHTML);
+            handleEqualsOperator();
         } else if (key === 'c') {
             clearScreen();
         } else if (key === 'Backspace') {
             handleBackSpace();
         } else {
-            display(KEYS[key]);
+            handleValueButton(KEYS[key]);
         }
     }
 });
@@ -67,7 +67,7 @@ const display = function (value) {
 
 const subscribeToEvents = function () {
     VALUES.forEach((element) => {
-        element.addEventListener('click', (e) => handleValueButton(e));
+        element.addEventListener('click', (e) => handleValueButton(e.target.value));
     });
 
     OPERATORS.forEach((element) => {
@@ -79,25 +79,25 @@ const subscribeToEvents = function () {
     });
 }
 
-const handleValueButton = function (e) {
+const handleValueButton = function (value) {
     let index = array.length < 2 ? 0 : 2;
     let existingValue = `${array[index]}`;
 
     if (existingValue.length === MAX_CHARACTERS)
         return;
 
-    if (e.target.value === '0' && array[index] == undefined)
+    if (value === '0' && array[index] == undefined)
         return;
 
     if (array[index] === undefined || newNumber) {
-        if (e.target.value === '.' && !existingValue.includes('.'))
-            array[index] = `0${e.target.value}`;
+        if (value === '.' && !existingValue.includes('.'))
+            array[index] = `0${value}`;
         else
-            array[index] = e.target.value;
+            array[index] = value;
     }
     else {
-        if (e.target.value !== '.' || (e.target.value === '.' && !existingValue.includes('.')))
-            array[index] += e.target.value;
+        if (value !== '.' || (value === '.' && !existingValue.includes('.')))
+            array[index] += value;
     }
 
     newNumber = false;
