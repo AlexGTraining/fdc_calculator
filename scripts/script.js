@@ -1,4 +1,4 @@
-const DISPLAY = document.querySelector(".display");
+const DISPLAY = document.querySelector(".display_content");
 const VALUES = document.querySelectorAll("button:not([class])");
 const OPERATORS = document.querySelectorAll(".operator");
 const ACTIONS = document.querySelectorAll(".action");
@@ -12,21 +12,7 @@ const KEYS = {
     'Backspace': 'Backspace'
 }
 
-const MAX_CHARACTERS = 10; // Max character length before font reduction starts
-const MIN_FONT_SIZE = 1.5; // Minimum font size in rem
-const INITIAL_FONT_SIZE = 3.5; // Base font size in rem
-const SCALE_FACTOR = 0.2; // Amount to reduce font size for each additional character
-
-const adjustDisplayFontSize = () => {
-    let length = DISPLAY.value.length;
-
-    if (length > MAX_CHARACTERS) {
-        const newFontSize = Math.max(MIN_FONT_SIZE, INITIAL_FONT_SIZE - (length - MAX_CHARACTERS) * SCALE_FACTOR);
-        DISPLAY.style.fontSize = `${newFontSize}rem`;
-    } else {
-        DISPLAY.style.fontSize = `${INITIAL_FONT_SIZE}rem`;
-    }
-};
+const MAX_CHARACTERS = 10;
 
 document.addEventListener('keydown', (e) => {
     const key = e.key;
@@ -34,7 +20,7 @@ document.addEventListener('keydown', (e) => {
     if (KEYS[key]) {
         e.preventDefault();
         if (key === 'Enter' || key === '=') {
-            operate(array[1], array[0], DISPLAY.value);
+            operate(array[1], array[0], DISPLAY.innerHTML);
         } else if (key === 'c') {
             clearScreen();
         } else if (key === 'Backspace') {
@@ -76,8 +62,7 @@ const display = function (value) {
         value = decimalCount > 2 ? value.toFixed(2) : value;
     }
 
-    DISPLAY.value = value;
-    adjustDisplayFontSize();
+    DISPLAY.innerHTML = value;
 };
 
 const subscribeToEvents = function () {
@@ -97,6 +82,12 @@ const subscribeToEvents = function () {
 const handleValueButton = function (e) {
     let index = array.length < 2 ? 0 : 2;
     let existingValue = `${array[index]}`;
+
+    if (existingValue.length === MAX_CHARACTERS)
+        return;
+
+    if (e.target.value === '0' && array[index] == undefined)
+        return;
 
     if (array[index] === undefined || newNumber) {
         if (e.target.value === '.' && !existingValue.includes('.'))
@@ -162,7 +153,7 @@ const handleEqualsOperator = function () {
     if (array.length == 3)
         secondNumber = array[2];
     else if (array.length == 2)
-        secondNumber = DISPLAY.value;
+        secondNumber = DISPLAY.innerHTML;
 
     if (secondNumber !== null) {
         array.splice(0, 3, operate(array[1], array[0], secondNumber));
@@ -190,8 +181,8 @@ const handleBackSpace = () => {
 }
 
 const clearScreen = function () {
-    DISPLAY.value = '';
     array.splice(0);
+    display(0);
     removeHighlight();
     newNumber = true;
 }
