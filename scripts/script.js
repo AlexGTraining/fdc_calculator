@@ -12,18 +12,36 @@ const KEYS = {
     'Backspace': 'Backspace'
 }
 
-const array = [];
+let array = [];
+let highlightedOperatorButton = null; // Track the highlighted operator
+
+// Adjust font size based on display content length
+const adjustDisplayFontSize = () => {
+    const maxLength = 10; // Max character length before font reduction starts
+    const minFontSize = 1.5; // Minimum font size in rem
+    const initialFontSize = 3.5; // Base font size in rem
+    const scaleFactor = 0.2; // Amount to reduce font size for each additional character
+
+    const length = DISPLAY.value.length;
+
+    // Calculate new font size
+    if (length > maxLength) {
+        const newFontSize = Math.max(minFontSize, initialFontSize - (length - maxLength) * scaleFactor);
+        DISPLAY.style.fontSize = `${newFontSize}rem`; // Set font size
+    } else {
+        DISPLAY.style.fontSize = `${initialFontSize}rem`; // Reset to default size
+    }
+};
 
 document.addEventListener('keydown', (e) => {
-    const key = e.key
+    const key = e.key;
 
     if (KEYS[key]) {
         e.preventDefault();
         if (key === 'Enter' || key === '=') {
-            operate(operator, firstNumber, DISPLAY.value);
+            operate(array[1], array[0], DISPLAY.value);
         } else if (key === 'c') {
             clearScreen();
-
         } else if (key === 'Backspace') {
             handleBackSpace();
         } else {
@@ -69,6 +87,7 @@ const operate = (op, a, b) => {
 const clearScreen = function () {
     DISPLAY.value = '';
     array.splice(0);
+    removeHighlight(); // Clear highlight
 }
 
 const display = function (value) {
@@ -76,8 +95,9 @@ const display = function (value) {
         let decimalCount = ("" + value).split('.')[1].length;
         value = decimalCount > 2 ? value.toFixed(2) : value;
     }
-
+    
     DISPLAY.value = value;
+    adjustDisplayFontSize(); // Adjust font size every time display is updated
 };
 
 const subscribeToEvents = function () {
@@ -101,6 +121,11 @@ const subscribeToEvents = function () {
 
     OPERATORS.forEach((element) => {
         element.addEventListener('click', (e) => {
+            // Remove highlight from previously highlighted button, if any
+            removeHighlight();
+            
+            // Highlight the current operator button
+            highlightButton(e.target);
 
             if (e.target.value == 'Negate') {
                 if (array.length > 0) {
@@ -109,7 +134,6 @@ const subscribeToEvents = function () {
                     display(array[index]);
                     changeNumber = true;
                 }
-
                 return;
             }
 
@@ -155,7 +179,20 @@ const subscribeToEvents = function () {
     });
 }
 
+const highlightButton = (button) => {
+    button.classList.add('highlight');
+    highlightedOperatorButton = button; // Store the highlighted button
+}
+
+const removeHighlight = () => {
+    if (highlightedOperatorButton) {
+        highlightedOperatorButton.classList.remove('highlight');
+        highlightedOperatorButton = null; // Reset the variable
+    }
+}
+
 let newNumber = false;
 let changeNumber = false;
 
 subscribeToEvents();
+
