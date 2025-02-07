@@ -39,7 +39,7 @@ const negate = (a) => a * -1;
 
 const divide = (a, b) => {
     if (b === 0) {
-        return 'Cannot divide by zero';
+        return 'CANNOT';
     }
     return a / b;
 }
