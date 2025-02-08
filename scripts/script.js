@@ -98,7 +98,7 @@ const handleValueButton = function (newValue) {
     let index = array.length < 2 ? 0 : 2;
     let existingValue = `${array[index]}`;
 
-    if(array[0] == 'CANNOT'){
+    if (array[0] == 'CANNOT') {
         removeHighlight();
         return;
     }
@@ -201,6 +201,10 @@ const handleBackSpace = () => {
     }
     else
         array[index] = value.substring(0, value.length - 1);
+
+    if (array[index] === undefined) {
+        array[index] = 0;
+    }
 
     display(array[index]);
 }
