@@ -165,18 +165,15 @@ const handleActionButton = function (value) {
 const handleEqualsOperator = function () {
     let secondNumber = null;
 
-    if (array.length == 3)
-        secondNumber = array[2];
-    else if (array.length == 2)
-        secondNumber = DISPLAY.innerHTML;
+    if (array.length < 3)
+        return;
 
-    if (secondNumber !== null) {
-        array.splice(0, 3, operate(array[1], array[0], secondNumber));
+    secondNumber = array[2];
+    array.splice(0, 3, operate(array[1], array[0], secondNumber));
 
-        display(array[0]);
-        newNumber = true;
-        removeHighlight();
-    }
+    display(array[0]);
+    newNumber = true;
+    removeHighlight();
 }
 
 const handleBackSpace = () => {
