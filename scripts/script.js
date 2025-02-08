@@ -98,6 +98,11 @@ const handleValueButton = function (newValue) {
     let index = array.length < 2 ? 0 : 2;
     let existingValue = `${array[index]}`;
 
+    if(array[0] == 'CANNOT'){
+        removeHighlight();
+        return;
+    }
+
     if (existingValue.length === MAX_CHARACTERS)
         return;
 
