@@ -1,4 +1,4 @@
-const DISPLAY = document.querySelector(".display_content");
+const DISPLAY = document.querySelector(".display");
 const VALUES = document.querySelectorAll("button:not([class])");
 const OPERATORS = document.querySelectorAll(".operator");
 const ACTIONS = document.querySelectorAll(".action");
