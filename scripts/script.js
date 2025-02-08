@@ -124,6 +124,10 @@ const handleValueButton = function (newValue) {
 
 const handleOperatorButton = function (value) {
     removeHighlight();
+
+    if (array[0] == 'CANNOT')
+        return;
+
     highlightButton(value);
 
     switch (value) {
@@ -159,6 +163,8 @@ const handleActionButton = function (value) {
             handleEqualsOperator();
             break;
         case "Backspace":
+            if (array[0] == 'CANNOT')
+                return;
             handleBackSpace();
             break;
     }
