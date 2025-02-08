@@ -22,13 +22,18 @@ const MAX_CHARACTERS = 10;
 document.addEventListener('keydown', (e) => {
     const key = e.key;
 
-    e.preventDefault();
-    if (Object.keys(ACTION_KEYS).includes(key))
+    if (Object.keys(ACTION_KEYS).includes(key)) {
+        e.preventDefault();
         handleActionButton(ACTION_KEYS[key]);
-    else if (Object.keys(OPERATOR_KEYS).includes(key))
-        handleOperatorButton(OPERATOR_KEYS[key])
-    else if (Object.keys(VALUE_KEYS).includes(key))
+    }
+    else if (Object.keys(OPERATOR_KEYS).includes(key)) {
+        e.preventDefault();
+        handleOperatorButton(OPERATOR_KEYS[key]);
+    }
+    else if (Object.keys(VALUE_KEYS).includes(key)) {
+        e.preventDefault();
         handleValueButton(VALUE_KEYS[key]);
+    }
 });
 
 const add = (a, b) => a + b;
