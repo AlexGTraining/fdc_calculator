@@ -67,8 +67,8 @@ const operate = (op, a, b) => {
     }
 }
 
-const display = function (value) {
-    if (("" + value).includes('.')) {
+const display = function (value, round = false) {
+    if (round && ("" + value).includes('.')) {
         let decimalCount = ("" + value).split('.')[1].length;
         value = decimalCount > 2 ? value.toFixed(2) : value;
     }
@@ -94,26 +94,28 @@ const subscribeToEvents = function () {
     });
 }
 
-const handleValueButton = function (value) {
+const handleValueButton = function (newValue) {
     let index = array.length < 2 ? 0 : 2;
     let existingValue = `${array[index]}`;
 
     if (existingValue.length === MAX_CHARACTERS)
         return;
 
-    if (value === '0' && array[index] == 0)
+    if (newValue === '0' && array[index] == 0 && !existingValue.includes('.'))
         return;
 
-    if (array[index] === undefined || array[index] == 0 || newNumber) {
-        if (value === '.' && !existingValue.includes('.'))
-            array[index] = `0${value}`;
+    if (array[index] === undefined || array[index] === 0 || newNumber) {
+        if (newValue === '.' && !existingValue.includes('.'))
+            existingValue = `0${newValue}`;
         else
-            array[index] = value;
+            existingValue = newValue;
     }
     else {
-        if (value !== '.' || (value === '.' && !existingValue.includes('.')))
-            array[index] += value;
+        if (newValue !== '.' || (newValue === '.' && !existingValue.includes('.')))
+            existingValue += newValue;
     }
+
+    array[index] = existingValue;
 
     newNumber = false;
     removeHighlight();
@@ -143,7 +145,7 @@ const handleOperatorButton = function (value) {
 
             array[1] = value;
 
-            display(array[0]);
+            display(array[0], true);
             break;
     }
 }
@@ -171,7 +173,7 @@ const handleEqualsOperator = function () {
     secondNumber = array[2];
     array.splice(0, 3, operate(array[1], array[0], secondNumber));
 
-    display(array[0]);
+    display(array[0], true);
     newNumber = true;
     removeHighlight();
 }
